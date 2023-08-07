@@ -8,6 +8,8 @@
 ![Postgres](https://img.shields.io/badge/-Postgres-336791?style=for-the-badge&logo=PostgreSQL&logoColor=white)
 ![gRPC](https://img.shields.io/badge/-gRPC-00C5CA?style=for-the-badge&logo=grpc&logoColor=white)
 ![Docker-compose](https://img.shields.io/badge/-DockerCompose-23A1F1?style=for-the-badge&logo=docker&logoColor=white)
+![Gin](https://img.shields.io/badge/-Gin-00B900?style=for-the-badge&logo=gin&logoColor=white)
+![Make](https://img.shields.io/badge/-Make-%23008EFF?style=for-the-badge&logo=gnu-make&logoColor=white)
 
 Сервис представляет из себя два микросервиса: `Api_Gateway` принимает REST запросы и возвращает информацию. За информацией `Api_Gateway` обращается к `Gateway_Processor` по gRPC соединению, тот в свою очередь уже обращается к базе данных.
 
