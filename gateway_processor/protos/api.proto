@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package api;
+
+service UserService {
+  rpc GetUser(GetUserRequest) returns (User) {}
+  rpc CreateUser(CreateUserRequest) returns (User) {}
+}
+
+service TransactionService {
+  rpc GetTransactions(GetTransactionsRequest) returns (Transactions) {}
+  rpc CreateTransaction(CreateTransactionRequest) returns (Transaction) {}
+}
+
+message GetUserRequest {
+  int32 user_id = 1;
+}
+
+message CreateUserRequest {
+  string first_name = 1;
+  string last_name = 2;
+  int32 balance = 3;
+}
+
+message User {
+  int32 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  int32 balance = 4;
+}
+
+message GetTransactionsRequest {
+  int32 user_id = 1;
+}
+
+message CreateTransactionRequest {
+  int32 user_id = 1;
+  int32 amount = 2;
+  string transaction_type = 3;
+}
+
+message Transaction {
+  int32 id = 1;
+  int32 user_id = 2;
+  int32 amount = 3;
+  int32 balance_before = 4;
+  string transaction_type = 5;
+  int64 created_at = 6;
+}
+
+message Transactions {
+  repeated Transaction transactions = 1;
+}

@@ -1,0 +1,61 @@
+version: "3.3"
+services:
+  db:
+    container_name: "db"
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - custom
+#  rabbitmq:
+#    image: rabbitmq:3-management-alpine
+#    container_name: rabbitmq
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    networks:
+#      - custom
+#    environment:
+#      RABBITMQ_DEFAULT_USER: admin
+#      RABBITMQ_DEFAULT_PASS: admin
+  api_gateway:
+    build:
+      context: ./api_gateway
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - custom
+  gateway_processor:
+    build:
+      context: ./gateway_processor
+      dockerfile: ./Dockerfile
+    ports:
+      - "50051:50051"
+    networks:
+      - custom
+    depends_on:
+      - db
+#  storage:
+#    build:
+#      context: ./storage
+#      dockerfile: ./Dockerfile
+#    depends_on:
+#      - rabbitmq
+#    networks:
+#      - custom
+
+networks:
+  custom:
+    driver: bridge
+
+volumes:
+  db-data:
