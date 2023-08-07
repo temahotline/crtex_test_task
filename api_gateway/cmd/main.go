@@ -8,6 +8,13 @@ import (
 	"log"
 )
 
+// @title Crtex Test Task
+// @version 1.0
+// @description API Server for Transactions
+
+// @host localhost:8000
+// @BasePath /
+
 func main() {
 	conn, err := grpc.Dial("gateway_processor:50051", grpc.WithInsecure())
 	if err != nil {

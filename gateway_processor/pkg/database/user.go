@@ -2,7 +2,9 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"gateway_processor/protos"
+	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"log"
 )
@@ -28,7 +30,10 @@ func GetUser(ctx context.Context, db *pgxpool.Pool, userId int32) (*protos.User,
 	err := db.QueryRow(ctx, query, userId).Scan(&firstName, &lastName, &balance)
 	if err != nil {
 		log.Printf("Error querying user with ID %d: %v", userId, err)
-		return nil, err
+		if err == pgx.ErrNoRows {
+			return nil, fmt.Errorf("user with ID %d not found", userId)
+		}
+		return nil, fmt.Errorf("database error: %v", err)
 	}
 	return &protos.User{Id: userId, FirstName: firstName, LastName: lastName, Balance: balance}, nil
 }
